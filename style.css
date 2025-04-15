@@ -1,0 +1,515 @@
+/* --- 基本設定 --- */
+:root {
+    /* ZINEN風配色例 */
+    --primary-color: #222222; /* ややソフトな黒 */
+    --secondary-color: #F5F5F5; /* 明るいグレー */
+    --accent-color: #8FBC8F; /* 例: ダークシーグリーン (自然なアクセント) */
+    --accent-color-darker: #709670;
+    --text-color: #333333; /* 基本テキスト */
+    --text-color-light: #777777; /* 薄めのテキスト */
+    --white: #ffffff;
+    --border-color: #dddddd;
+
+    /* フォント設定 (ZINEN風) */
+    --base-font: 'Lato', 'Noto Sans JP', sans-serif; /* クリーンなサンセリフ */
+    --title-font: 'Playfair Display', 'Noto Serif JP', serif; /* エレガントなセリフ */
+
+    /* アニメーション用 */
+    --transition-speed: 0.7s; /* 少しゆっくり */
+    --transition-timing: cubic-bezier(0.165, 0.84, 0.44, 1); /* 滑らかなイージング */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body.zinen-style { /* ZINEN風スタイル用のクラス */
+    font-family: var(--base-font);
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    background-color: var(--white);
+    line-height: 1.7;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--title-font);
+    margin-top: 0;
+    font-weight: 600; /* 見出しの太さ調整 */
+    color: var(--primary-color);
+    line-height: 1.3;
+}
+
+/* 日本語フォント指定 (必要に応じて) */
+[lang="ja"] { font-family: 'Noto Sans JP', sans-serif; }
+h1[lang="ja"], h2[lang="ja"], h3[lang="ja"] { font-family: 'Noto Serif JP', serif; }
+
+
+a {
+    color: var(--primary-color); /* リンクは基本色 */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: var(--accent-color); /* ホバーでアクセントカラー */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0; /* ZINEN風は角丸なしが多い */
+}
+
+.container {
+    max-width: 1140px; /* コンテンツ幅調整 */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.content-section.teaser-section {
+    padding: 100px 0; /* セクション間余白を多めに */
+    overflow: hidden; /* アニメーション用 */
+}
+.bg-light {
+    background-color: var(--secondary-color);
+}
+.text-center {
+    text-align: center;
+}
+
+/* --- ヘッダー (ZINEN風) --- */
+.header.zinen-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
+    z-index: 1000;
+    padding: 30px 0; /* パディング調整 */
+    transition: background-color 0.3s ease;
+}
+/* スクロールで背景色をつける場合 (JSでクラス付与) */
+/* .header.zinen-header.scrolled {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+} */
+.header.zinen-header .logo img {
+    height: 35px; /* ロゴサイズ */
+    filter: brightness(0) invert(1); /* 白ロゴ */
+}
+/* ナビは非表示 or 最小限 */
+.language-switcher { display: none; } /* 例として非表示 */
+
+
+/* --- ヒーローセクション (ZINEN風) --- */
+.hero-teaser {
+    position: relative;
+    color: var(--white);
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.hero-image-teaser {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 背景画像 (images/zinen-hero-view.jpg) */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://placehold.co/1920x1080/556b2f/ffffff?text=Serene+Nature+View');
+    background-size: cover;
+    background-position: center center;
+    z-index: -1;
+}
+.hero-content-teaser {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    padding: 30px;
+}
+.hero-content-teaser h1 {
+    font-size: 4.5rem; /* さらに大きく */
+    font-weight: 600; /* 少し細めに調整も可 */
+    margin-bottom: 0.5em;
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+.hero-content-teaser .opening-date {
+    font-size: 1.1rem; /* 少し小さく */
+    font-weight: 400;
+    margin-bottom: 2.5em; /* CTAとの間隔 */
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.2em; /* 文字間隔広く */
+    text-transform: uppercase;
+}
+.hero-content-teaser .scroll-link { /* CTAボタンの代わり */
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    padding: 12px 30px;
+    border-radius: 30px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.hero-content-teaser .scroll-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--white);
+}
+.hero-content-teaser .scroll-link i {
+    margin-right: 8px;
+}
+.scroll-down {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--white);
+    font-size: 0.9rem;
+    opacity: 0.7;
+    text-align: center;
+    animation: fadeInOut 3s infinite;
+}
+.scroll-down span {
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+}
+@keyframes fadeInOut { /* スクロールダウンの点滅 */
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* --- ボタン類 (ZINEN風) --- */
+.cta-button-zinen { /* フォーム用ボタンなど */
+    display: inline-block;
+    background-color: var(--primary-color); /* 基本色背景 */
+    color: var(--white) !important;
+    padding: 14px 40px;
+    border-radius: 0; /* 角丸なし */
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.cta-button-zinen:hover {
+    background-color: #000; /* ホバーで黒 */
+    transform: scale(1.02);
+}
+/* Link Button は ZINEN風ではあまり使わない想定 */
+.link-button { display: none; }
+
+/* --- コンセプト紹介 (ZINEN風) --- */
+.zinen-concept {
+    background-color: var(--white); /* 白背景 */
+}
+.concept-container-zinen {
+    display: flex;
+    gap: 80px; /* スペース広め */
+    align-items: center;
+}
+.concept-image-zinen {
+    flex: 1;
+    max-width: 45%;
+}
+.concept-image-zinen img {
+    /* スタイル調整 */
+}
+.concept-text-zinen {
+    flex: 1;
+}
+.concept-text-zinen h2 {
+    font-size: 3rem; /* 見出しサイズ調整 */
+    font-weight: 600;
+    margin-bottom: 1em;
+    line-height: 1.3;
+    text-align: left;
+}
+.concept-text-zinen p {
+    font-size: 1.05rem; /* 本文サイズ */
+    line-height: 1.9;
+    color: var(--text-color);
+}
+
+/* --- ヴィラハイライト (ZINEN風) --- */
+.zinen-highlights {
+    /* 背景色などは .bg-light で指定 */
+}
+.zinen-highlights .section-title {
+    margin-bottom: 3em; /* タイトル下の余白 */
+}
+.highlight-item-zinen {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 80px; /* 各ハイライト間の余白 */
+}
+.highlight-item-zinen.reverse { /* 左右反転レイアウト */
+    flex-direction: row-reverse;
+}
+.highlight-image-zinen {
+    flex: 1.2; /* 画像の比率 */
+    overflow: hidden; /* ホバー用 */
+}
+.highlight-image-zinen img {
+    transition: transform 0.5s var(--transition-timing);
+}
+.highlight-item-zinen:hover .highlight-image-zinen img {
+    transform: scale(1.03); /* ホバーで画像拡大 */
+}
+.highlight-text-zinen {
+    flex: 1;
+}
+.highlight-text-zinen h3 {
+    font-size: 1.8rem; /* ハイライト見出し */
+    font-weight: 600;
+    margin-bottom: 0.8em;
+}
+.highlight-text-zinen p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-color-light);
+}
+
+/* --- ロケーション＆伊豆 (ZINEN風) --- */
+.zinen-location .section-description {
+    margin-bottom: 60px; /* 説明文下の余白 */
+}
+.location-gallery-zinen {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3列グリッド */
+    gap: 20px; /* 画像間のギャップ */
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.location-image-item {
+    overflow: hidden; /* ホバー用 */
+}
+.location-image-item img {
+    height: 450px; /* 高さを統一 */
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--transition-timing);
+}
+.location-image-item:hover img {
+    transform: scale(1.03);
+}
+/* 画像にキャプションをつけたい場合は別途スタイル追加 */
+
+/* --- 先行情報登録フォーム (ZINEN風) --- */
+.cta-section-zinen {
+    /* 背景色などは .bg-light で指定 */
+}
+.cta-section-zinen h2 {
+    color: var(--primary-color); /* タイトル色 */
+}
+.cta-section-zinen h2::after {
+    background-color: var(--accent-color);
+}
+.cta-section-zinen p {
+    color: var(--text-color); /* テキスト色 */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5em;
+    font-size: 1.05rem;
+}
+.subscribe-form-zinen {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 隙間を狭める */
+    align-items: stretch; /* 高さを揃える */
+    justify-content: center;
+}
+.subscribe-form-zinen input[type="email"] {
+    flex-grow: 1;
+    padding: 14px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 0; /* 角丸なし */
+    font-size: 1rem;
+    min-width: 280px;
+    background-color: var(--white); /* 背景白 */
+}
+.subscribe-form-zinen button {
+    /* cta-button-zinen スタイルを適用 */
+    white-space: nowrap;
+}
+.privacy-policy-zinen {
+    width: 100%;
+    margin-top: 15px;
+    font-size: 0.85rem; /* 小さめに */
+    color: var(--text-color-light);
+    text-align: center;
+}
+.privacy-policy-zinen label {
+    display: inline-flex; /* チェックボックスとテキストを揃える */
+    align-items: center;
+    cursor: pointer;
+}
+.privacy-policy-zinen input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+.privacy-policy-zinen a {
+    color: var(--text-color); /* リンク色調整 */
+    text-decoration: underline;
+}
+.privacy-policy-zinen a:hover {
+    color: var(--accent-color);
+}
+
+/* --- SNSフォロー (ZINEN風) --- */
+.zinen-social {
+    /* スタイル調整 */
+}
+.zinen-social .section-title {
+    /* スタイル調整 */
+}
+.zinen-social p { /* 説明文は不要なら削除 */
+    display: none;
+}
+.social-icons-zinen a {
+    font-size: 1.8rem; /* アイコンサイズ調整 */
+    margin: 0 12px;
+    color: var(--text-color-light); /* アイコン色 */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.social-icons-zinen a:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* --- フッター (ZINEN風) --- */
+.footer.zinen-footer {
+    background-color: var(--white); /* 背景白 */
+    color: var(--text-color-light);
+    padding: 50px 0 30px;
+    text-align: center;
+}
+.footer-content-zinen {
+    margin-bottom: 25px;
+}
+.footer-logo-zinen {
+    height: 30px; /* フッターロゴサイズ */
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+.footer-address {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+.footer-links {
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+.footer-links a {
+    color: var(--text-color-light);
+    margin: 0 8px;
+    text-decoration: underline;
+}
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+.copyright {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    color: var(--text-color-light);
+}
+
+/* --- アニメーション (既存流用) --- */
+.animate-on-scroll {
+    opacity: 0;
+    transition: opacity var(--transition-speed) var(--transition-timing),
+                transform var(--transition-speed) var(--transition-timing);
+}
+.fade-in { opacity: 0; }
+.fade-in.is-visible { opacity: 1; }
+.fade-in-up { opacity: 0; transform: translateY(60px); } /* 移動距離調整 */
+.fade-in-up.is-visible { opacity: 1; transform: translateY(0); }
+.fade-in-left { opacity: 0; transform: translateX(-60px); }
+.fade-in-left.is-visible { opacity: 1; transform: translateX(0); }
+.fade-in-right { opacity: 0; transform: translateX(60px); }
+.fade-in-right.is-visible { opacity: 1; transform: translateX(0); }
+
+
+/* --- レスポンシブ対応 (ZINEN風調整) --- */
+@media (max-width: 992px) {
+    .location-gallery-zinen {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .highlight-item-zinen {
+        gap: 40px; /* タブレットでのギャップ */
+        margin-bottom: 60px;
+    }
+    .highlight-text-zinen h3 { font-size: 1.6rem; }
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 3rem; } /* スマホ見出し調整 */
+    h2.section-title { font-size: 1.8rem; }
+    .container { padding: 0 15px; } /* スマホ余白 */
+    .content-section.teaser-section { padding: 60px 0; }
+
+    /* ヘッダー */
+    .header.zinen-header { padding: 20px 0; }
+    .header.zinen-header .logo img { height: 30px; }
+
+    /* ヒーロー */
+    .hero-content-teaser h1 { font-size: 2.8rem; }
+    .hero-content-teaser .opening-date { font-size: 1rem; letter-spacing: 0.15em; }
+    .hero-content-teaser .scroll-link { padding: 10px 25px; font-size: 0.9rem;}
+
+    /* コンセプト */
+    .concept-container-zinen { flex-direction: column; gap: 30px; }
+    .concept-image-zinen { max-width: 100%; order: -1; } /* 画像を上に */
+    .concept-text-zinen h2 { text-align: center; font-size: 2.4rem;}
+    .concept-text-zinen { text-align: center; }
+
+    /* ハイライト */
+    .highlight-item-zinen,
+    .highlight-item-zinen.reverse {
+        flex-direction: column; /* 縦並び */
+        gap: 25px;
+        margin-bottom: 50px;
+    }
+    .highlight-text-zinen { text-align: center; }
+    .highlight-text-zinen h3 { font-size: 1.5rem; }
+
+    /* ロケーション */
+    .location-gallery-zinen { grid-template-columns: 1fr; gap: 15px; } /* 1列 */
+    .location-image-item img { height: 350px; }
+
+    /* フォーム */
+    .subscribe-form-zinen { flex-direction: column; gap: 12px; }
+    .subscribe-form-zinen input[type="email"] { width: 100%; min-width: auto; }
+    .subscribe-form-zinen button { width: 100%; }
+
+    /* SNS */
+    .social-icons-zinen a { font-size: 1.6rem; margin: 0 10px; }
+
+    /* フッター */
+    .footer.zinen-footer { padding: 40px 0 20px; }
+}
